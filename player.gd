@@ -27,6 +27,7 @@ func _process(_delta : float) -> void:
 		shoot()
 		
 func shoot ():
+	$AudioStreamPlayer2D.play()
 	var bolt = bolt_path.instance()
 	get_parent().add_child(bolt)
 	if (faces_right):

@@ -11,4 +11,5 @@ func _physics_process(delta):
 func _on_Area2D_body_entered(body):
 	if body.has_method("handle_hit"):
 		body.handle_hit()
+		$AudioStreamPlayer2D.play()
 	queue_free()

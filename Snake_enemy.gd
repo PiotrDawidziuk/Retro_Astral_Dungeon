@@ -13,6 +13,7 @@ func _physics_process(delta):
 	move_and_slide(motion)
 
 func handle_hit():
+
 	print("snake hit")
 	queue_free()
 
