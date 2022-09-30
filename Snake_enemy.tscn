@@ -23,4 +23,10 @@ shape = SubResource( 1 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SnakeArea2D"]
 shape = SubResource( 2 )
 
+[node name="aim_left" type="Position2D" parent="."]
+position = Vector2( -8, 0 )
+
+[node name="aim_right" type="Position2D" parent="."]
+position = Vector2( 8, 0 )
+
 [connection signal="body_entered" from="SnakeArea2D" to="." method="_on_SnakeArea2D_body_entered"]
