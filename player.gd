@@ -3,6 +3,7 @@ extends KinematicBody2D
 export var speed := 50.0
 var faces_right = true
 const bolt_path = preload("res://Bolt.tscn")
+var is_player_alive = true
 
 func _physics_process(delta: float) -> void:
 	var input_vector := Vector2(
@@ -32,5 +33,11 @@ func shoot ():
 	else: 
 		bolt.position = $aim_left.global_position
 		bolt.velocity = Vector2(-1,0)
+
 	yield(get_tree().create_timer(0.5), "timeout")
-	bolt.queue_free()
+	if bolt != null and is_instance_valid(bolt):
+		bolt.queue_free()
+func die():
+	Globals.is_player_alive = false	
+	print("ded")
+	get_parent().get_tree().reload_current_scene()
