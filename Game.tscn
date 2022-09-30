@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://art/tiles.png" type="Texture" id=1]
 [ext_resource path="res://player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://art/bolt.png" type="Texture" id=3]
 [ext_resource path="res://Snake_enemy.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Game.gd" type="Script" id=6]
 
@@ -93,4 +94,14 @@ margin_right = 140.0
 margin_bottom = 70.0
 text = "GAME OVER"
 
+[node name="Label_bolt _1" type="Sprite" parent="."]
+position = Vector2( 8, 104 )
+texture = ExtResource( 3 )
+
+[node name="Label_bolt_2" type="Sprite" parent="."]
+position = Vector2( 16, 104 )
+texture = ExtResource( 3 )
+
 [connection signal="player_died" from="player" to="." method="_on_player_player_died"]
+[connection signal="position" from="player" to="TileMap/Snake_enemy" method="_on_player_position"]
+[connection signal="shot_fired" from="player" to="." method="_on_player_shot_fired"]

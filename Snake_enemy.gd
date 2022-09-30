@@ -5,9 +5,10 @@ var speed = 2
 var motion = Vector2(0,0)
 var _timer = null
 var direction =  1
+var reversed = false
 
 func _physics_process(delta):
-
+	
 	motion.y += speed * direction
 	
 	move_and_slide(motion)
@@ -26,6 +27,7 @@ func _on_SnakeArea2D_body_entered(body):
 	
 
 func _ready():
+	
 	_timer = Timer.new()
 	add_child(_timer)
 
@@ -44,9 +46,21 @@ func shoot ():
 	#if (faces_right):
 	#	bolt.position = $aim_right.global_position
 	#else: 
-	venom.position = $aim_left.global_position
-	venom.velocity = Vector2(-1,0)
-	
+	if (!reversed):
+		venom.position = $aim_left.global_position
+		venom.velocity = Vector2(-1,0)
+	else: 
+		venom.position = $aim_right.global_position
+		venom.velocity = Vector2(1,0)
 	yield(get_tree().create_timer(1), "timeout")
 	if venom != null and is_instance_valid(venom):
 		venom.queue_free()
+func turn_around_enemy(player_position):
+	print("turn snake " + String(player_position.y))
+	#reversed = true
+	if (!reversed):
+		get_node("SnakeLookingLeft").set_flip_h(true) 
+		reversed = true
+	else:
+		get_node("SnakeLookingLeft").set_flip_h(false) 
+		reversed = false

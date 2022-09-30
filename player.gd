@@ -5,6 +5,9 @@ var faces_right = true
 const bolt_path = preload("res://Bolt.tscn")
 var is_player_alive = true
 signal player_died
+signal shot_fired
+signal position
+var shots = 20
 
 func _physics_process(delta: float) -> void:
 	var input_vector := Vector2(
@@ -23,9 +26,11 @@ func _process(_delta : float) -> void:
 	if faces_right == false and Input.is_action_pressed("ui_right"):
 		get_node("PlayerSprite").set_flip_h(false) 
 		faces_right = true
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("ui_accept") and shots > 0:
 		shoot()
-		
+
+
+
 func shoot ():
 	$AudioStreamPlayer2D.play()
 	var bolt = bolt_path.instance()
@@ -39,10 +44,17 @@ func shoot ():
 	yield(get_tree().create_timer(0.5), "timeout")
 	if bolt != null and is_instance_valid(bolt):
 		bolt.queue_free()
+	shots = shots -1
+	emit_signal("shot_fired", shots)
 
 func die():
 	#Globals.is_player_alive = false	
 	print("ded")
 	emit_signal("player_died")
 	
-	#get_parent().get_tree().reload_current_scene()
+	
+
+
+func _on_enemy_turner_body_entered(body):
+	if body.has_method("turn_around_enemy"):
+		body.turn_around_enemy(position)
