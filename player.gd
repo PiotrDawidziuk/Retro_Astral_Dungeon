@@ -4,6 +4,7 @@ export var speed := 50.0
 var faces_right = true
 const bolt_path = preload("res://Bolt.tscn")
 var is_player_alive = true
+signal player_died
 
 func _physics_process(delta: float) -> void:
 	var input_vector := Vector2(
@@ -37,7 +38,10 @@ func shoot ():
 	yield(get_tree().create_timer(0.5), "timeout")
 	if bolt != null and is_instance_valid(bolt):
 		bolt.queue_free()
+
 func die():
-	Globals.is_player_alive = false	
+	#Globals.is_player_alive = false	
 	print("ded")
-	get_parent().get_tree().reload_current_scene()
+	emit_signal("player_died")
+	
+	#get_parent().get_tree().reload_current_scene()

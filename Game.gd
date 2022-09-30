@@ -9,3 +9,7 @@ func _ready():
 func _input(event):
 	if Input.get_action_strength("ui_cancel"):
 		get_tree().reload_current_scene()
+
+
+func _on_player_player_died():
+	get_tree().reload_current_scene()

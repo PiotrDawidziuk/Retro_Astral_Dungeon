@@ -82,3 +82,5 @@ margin_top = 56.0
 margin_right = 140.0
 margin_bottom = 70.0
 text = "GAME OVER"
+
+[connection signal="player_died" from="player" to="." method="_on_player_player_died"]
